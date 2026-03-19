@@ -1,5 +1,5 @@
 ---
-title: Youtube RAG Intelligence
+title: YouTube RAG Intelligence Bot
 emoji: 📺
 colorFrom: red
 colorTo: indigo
@@ -7,7 +7,8 @@ sdk: gradio
 sdk_version: 5.0.1
 app_file: app.py
 pinned: false
-license: mit
+license: apache-2.0
+python_version: 3.10
 ---
 
 # 📺 YouTube Intelligence Bot (RAG-Powered)
