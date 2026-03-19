@@ -1,0 +1,6 @@
+gradio
+langchain-google-genai
+langchain-community
+langchain-text-splitters
+faiss-cpu
+youtube-transcript-api
