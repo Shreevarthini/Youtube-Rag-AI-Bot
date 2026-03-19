@@ -25,12 +25,22 @@ def get_video_id(url):
 def get_transcript(url):
     video_id = get_video_id(url)
     if not video_id:
+        print("ERROR: Could not extract video ID from URL")
         return None
+    
+    print(f"Fetching transcript for video ID: {video_id}")
+    
     try:
         ytt_api = YouTubeTranscriptApi()
-        transcripts = ytt_api.list(video_id)
+        transcript_list = ytt_api.list(video_id)
+        
+        # Print ALL available transcripts
+        print("Available transcripts:")
+        for t in transcript_list:
+            print(f"  - language: {t.language_code}, generated: {t.is_generated}")
+        
         transcript = ""
-        for t in transcripts:
+        for t in transcript_list:
             if t.language_code == 'en':
                 if t.is_generated:
                     if len(transcript) == 0:
@@ -38,11 +48,17 @@ def get_transcript(url):
                 else:
                     transcript = t.fetch()
                     break
+        
+        if not transcript:
+            print("No English transcript found")
+        else:
+            print(f"Transcript fetched, length: {len(transcript)}")
+            
         return transcript if transcript else None
+
     except Exception as e:
         print(f"Error fetching transcript: {e}")
         return None
- 
  
 def process(transcript):
     txt = ""
