@@ -1,5 +1,5 @@
-gradio>=5.3.0
-huggingface-hub>=0.26.0
+gradio==5.0.1
+huggingface-hub==0.24.0
 langchain-google-genai
 langchain-community
 langchain-text-splitters
