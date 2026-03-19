@@ -41,7 +41,7 @@ def get_transcript(url):
         
         transcript = ""
         for t in transcript_list:
-            if t.language_code == 'en':
+            if t.language_code.startswith('en'):
                 if t.is_generated:
                     if len(transcript) == 0:
                         transcript = t.fetch()
