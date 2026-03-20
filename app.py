@@ -262,37 +262,26 @@ def generate_answer(question, faiss_index, qa_chain_not_needed, k=7):
 transcript_storage = ""
  
 def summarize_video(video_url):
-    """
-    Title: Summarize Video
- 
-    Description:
-    This function generates a summary of the video using the preprocessed transcript.
-    If the transcript hasn't been fetched yet, it fetches it first.
- 
-    Args:
-        video_url (str): The URL of the YouTube video from which the transcript is to be fetched.
- 
-    Returns:
-        str: The generated summary of the video or a message indicating that no transcript is available.
-    """
-    raw_data = get_transcript(video_url)
-    if not raw_data: return "Could not find an English transcript for this video."
+    video_id = get_video_id(video_url)
+    if not video_id:
+        return "ERROR: Could not extract video ID from URL"
     
-    full_text = process(raw_data)
-    llm = initialize_gemini()
-    
-    prompt = PromptTemplate.from_template("""
-    <|begin_of_text|>system
-    You are an AI assistant summarizing YouTube transcripts. 
-    Provide a concise paragraph capturing the main points. Ignore timestamps.
-    
-    user
-    Summarize this transcript: {transcript}
-    assistant
-    """)
-    chain = prompt | llm | StrOutputParser()
-    return chain.invoke({"transcript": full_text})
- 
+    try:
+        ytt_api = YouTubeTranscriptApi()
+        transcript_list = ytt_api.list(video_id)
+        
+        # Show all available transcripts in the UI
+        available = []
+        for t in transcript_list:
+            available.append(f"language: {t.language_code}, generated: {t.is_generated}")
+        
+        if not available:
+            return "ERROR: No transcripts found at all for this video"
+        
+        return "Available transcripts:\n" + "\n".join(available)
+        
+    except Exception as e:
+        return f"ERROR: {str(e)}"
  
 def answer_question(video_url, user_question):
     raw_data = get_transcript(video_url)
