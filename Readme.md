@@ -10,14 +10,14 @@ pinned: false
 license: apache-2.0
 python_version: "3.10"
 ---
-# 📺 YouTube Intelligence Bot (RAG-Powered)
+# YouTube Intelligence Bot (RAG-Powered)
 
 This project utilises Retrieval-Augmented Generation (RAG) to summarize and query YouTube video content.
 
 # LIVE DEMO
 https://yt-rag-bot.onrender.com
 
-## 🏗 System Architecture
+## System Architecture
 The application implements a **Modular RAG** architecture:
 * **LLM**: Gemini 2.5 Flash
 * **Embeddings**: gemini-embedding-001
